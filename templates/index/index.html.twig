@@ -19,7 +19,7 @@
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid
                 atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero
                 voluptate voluptatibus possimus, veniam magni quis!</p>
-            <a class="btn btn-primary" href="#!">Read more →</a>
+            <a class="btn btn-primary" href="{{ url('view_blog', {slug: 'test'}) }}">Read more →</a>
         </div>
     </div>
     <div class="row">
@@ -93,7 +93,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <ul class="list-unstyled mb-0">
-                    <li><a href="#!">Web Design</a></li>
+                    <li><a href="{{ url('view_category', {slug: 'test'}) }}">Web Design</a></li>
                     <li><a href="#!">HTML</a></li>
                     <li><a href="#!">Freebies</a></li>
                 </ul>
