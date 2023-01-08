@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}Hello IndexController!{% endblock %}
+{% set section_title = "categories" %}
 {% block body %}
     {% block header %}{% endblock %}
     <div class="container mt-5">
@@ -19,7 +20,10 @@
                     </div>
                 </div>
                 <div class="card mb-4">
-                    {% block categories %}{% endblock %}
+                    {#{% block categories %}{% endblock %}#}
+                    {{ include('partials/_categories.html.twig')}}
+                    {# this will render the result of the retreiveAllCategories controller #}
+                    {{ render(controller("App\\Controller\\CategoryController::retreiveAllCategories")) }}
                 </div>
                 <div class="card mb-4">
                     <div class="card-header">Side Widget</div>

@@ -40,4 +40,17 @@ class CategoryController
 
         return new Response($content);
     }
+
+    public function retreiveAllCategories(): Response
+    {
+        $categories = [
+            ['Web Design', 'HTML', 'Freebies'],
+            ['JavaScript', 'CSS', 'Tutorials'],
+        ];
+
+        return new Response($this->twig->render(
+            'category/list.html.twig',
+            ['categories' => $categories]
+        ));
+    }
 }

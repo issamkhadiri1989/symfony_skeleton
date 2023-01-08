@@ -1,0 +1,16 @@
+<div class="card-header">Categories</div>
+<div class="card-body">
+    <div class="row">
+        {% for elements in categories %}
+            <div class="col-sm-6">
+                <ul class="list-unstyled mb-0">
+                    {% for item in elements %}
+                        <li>
+                            <a href="{{ url('view_category', {slug: 'test'}) }}">{{ item }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</div>

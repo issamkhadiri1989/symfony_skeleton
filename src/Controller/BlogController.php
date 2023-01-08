@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -18,13 +18,14 @@ class BlogController extends  AbstractController
      *
      * @param string $slug
      *
-     * @return Response
+     * @return array
      */
     #[Route(path: "/blog/{slug}", name: "view_blog")]
-    public function singleBlock(string $slug): Response
+    #[Template("blog/view.html.twig")]
+    public function singleBlock(string $slug): array
     {
-        return $this->render('blog/view.html.twig', [
+        return [
             'controller_name' => 'IndexController',
-        ]);
+        ];
     }
 }
