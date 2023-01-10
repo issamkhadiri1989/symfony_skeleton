@@ -20,8 +20,7 @@
                     </div>
                 </div>
                 <div class="card mb-4">
-                    {#{% block categories %}{% endblock %}#}
-                    {{ include('partials/_categories.html.twig')}}
+                    {#{{ include('partials/_categories.html.twig')}}#}
                     {# this will render the result of the retreiveAllCategories controller #}
                     {{ render(controller("App\\Controller\\CategoryController::retreiveAllCategories")) }}
                 </div>
