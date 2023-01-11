@@ -27,7 +27,7 @@
         {{ _self.display_blog_card(blogs.fetchTheNewlyCreatedBlog, 30, 90) }}
     {% endif %}
     <div class="row">
-        {% for items in blogs.formatAndGetRestOfBlogs %}
+        {% for items in blogs.getSplittedData %}
             <div class="col-lg-6">
                 {% for blog in items %}
                     {{ _self.display_blog_card(blog, 30, 90, 'h4') }}

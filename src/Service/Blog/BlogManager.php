@@ -6,27 +6,13 @@ namespace App\Service\Blog;
 
 use App\Entity\Blog;
 use App\Repository\BlogRepository;
+use App\Service\AbstractSplitter;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class BlogManager
 {
     public function __construct(private readonly BlogRepository $repository)
     {
-    }
-
-    /**
-     * Finds and gets $maxCount blogs from the database which are published (not draft).
-     *
-     * @param int $maxCount
-     *
-     * @return Blog[]
-     */
-    public function retrieveBlogs(int $maxCount = 5): array
-    {
-        return $this->repository->findBy(
-            criteria: ['draft' => false],
-            limit: $maxCount,
-            orderBy: ['publishDate' => 'DESC']
-        );
     }
 
     /**
@@ -38,16 +24,19 @@ class BlogManager
      */
     public function splitToNewlyAndExtraBlogs(int $maxNumber): object
     {
-        $blogs = $this->retrieveBlogs($maxNumber);
-
-        return new class ($blogs) {
+        return new class ($this->repository, $maxNumber) extends AbstractSplitter {
             private array $blogs;
             private bool $empty;
 
-            public function __construct(array $blogs)
+            public function __construct(ServiceEntityRepository $repository, int $maxNumber)
             {
-                $this->blogs = $blogs;
-                $this->empty = empty($blogs) === true;
+                parent::__construct($repository);
+                $this->blogs = $repository->findBy(
+                    criteria: ['draft' => false],
+                    limit: $maxNumber,
+                    orderBy: ['publishDate' => 'DESC']
+                );
+                $this->empty = empty($this->blogs) === true;
             }
 
             /**
@@ -64,20 +53,13 @@ class BlogManager
                 return null;
             }
 
-            /**
-             * Gets the rest of the blogs from the list.
-             *
-             * @return Blog[]
-             */
-            public function formatAndGetRestOfBlogs(): array
+            protected function dataBuilder(): array
             {
                 if (true === $this->empty || \count($this->blogs) === 1) {
                     return [];
                 }
                 // get the rest of the list except the first one
-                $otherBlogs = \array_slice($this->blogs, 1);
-
-                return \array_chunk($otherBlogs, (int) \ceil(\count($otherBlogs) / 2));
+                return \array_slice($this->blogs, 1);
             }
         };
     }

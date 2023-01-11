@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Slug;
@@ -83,5 +84,18 @@ class Category
         $this->blogs->removeElement($blog);
 
         return $this;
+    }
+
+    /**
+     * This returns only non draft blogs.
+     *
+     * @return Collection
+     */
+    public function getNonDraftBlogs(): Collection
+    {
+        $criteria = Criteria::create()
+                ->where(Criteria::expr()->eq('draft', true));
+
+        return $this->blogs->matching($criteria);
     }
 }

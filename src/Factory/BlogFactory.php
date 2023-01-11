@@ -32,7 +32,7 @@ final class BlogFactory extends ModelFactory
     protected function getDefaults(): array
     {
         $title = self::faker()->text(255);
-        $htmlContent = '<p>'.implode('</p><p>', self::faker()->paragraphs(4))."</p>";
+        $htmlContent = '<p>'.implode('</p><p>', self::faker()->paragraphs(\rand(9, 20)))."</p>";
 
         return [
             'content' => $htmlContent,

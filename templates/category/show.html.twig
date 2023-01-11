@@ -1,0 +1,44 @@
+{% extends 'layout.html.twig' %}
+{% block header %}
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder">
+                    {{ category.name | upper }}
+                </h1>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+{% block content %}
+    <div class="related">
+        {% for item in category.getNonDraftBlogs %}
+            <div class="row">
+                <div class="col-lg mt-3 mb-3">
+                    <div class="card mt-6" style="width: 100%">
+                        <img src="https://codingyaar.com/wp-content/uploads/bootstrap-4-card-image-left-demo-image.jpg?ezimgfmt=rs:287x287/rscb1/ngcb1/notWebP"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.title | truncate(30) }}</h5>
+                            <p class="card-text">
+                                {{ item.content | raw | truncate(90) }}
+                            </p>
+                            <a href="{{ path('view_blog', {slug: item.slug })}}" class="btn btn-primary">Read more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block styles %}
+    <style type="text/css">
+        .related .card {
+            flex-direction: row;
+        }
+
+        .related .card img {
+            width: 30%;
+        }
+    </style>
+{% endblock %}
