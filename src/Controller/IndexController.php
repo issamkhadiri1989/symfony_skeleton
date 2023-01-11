@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Blog;
+use App\Service\Blog\BlogManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +17,7 @@ use Twig\Error\SyntaxError;
 #[AsController]
 class IndexController
 {
-    public function __construct(private readonly Environment $twig)
+    public function __construct(private readonly Environment $twig, private readonly BlogManager $blogManager)
     {
     }
 
@@ -32,7 +34,7 @@ class IndexController
     public function index(): Response
     {
         $content =  $this->twig->render('index/index.html.twig', [
-            'controller_name' => 'IndexController',
+            'blogs' => $this->blogManager->splitToNewlyAndExtraBlogs(5),
         ]);
 
         return new Response($content);
