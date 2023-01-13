@@ -7,16 +7,29 @@ namespace App\DataFixtures;
 use App\Entity\Blog;
 use App\Factory\BlogFactory;
 use App\Factory\CategoryFactory;
+use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     private const MAX_CATEGORIES = 6;
     private const MAX_BLOGS = 26;
+    private const MAX_USERS = 10;
+
+    public function __construct(private readonly UserPasswordHasherInterface $hasher)
+    {
+    }
 
     public function load(ObjectManager $manager): void
     {
+        UserFactory::createMany(self::MAX_USERS);
+        foreach (UserFactory::all() as $user) {
+            $hashedPassword = $this->hasher->hashPassword($user->object(), $user->getPassword());
+            $user->setPassword($hashedPassword);
+        }
+
         BlogFactory::createMany(self::MAX_BLOGS);
         CategoryFactory::createMany(self::MAX_CATEGORIES);
         $occurrences = [];
