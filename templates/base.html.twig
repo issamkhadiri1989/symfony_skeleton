@@ -1,19 +1,96 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com/"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('assets/fonts/icomoon/style.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/fonts/flaticon/font/flaticon.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/tiny-slider.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/glightbox.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/aos.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"/>
+    <title>HOME - SQLI</title>
+</head>
+<body>
+<div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+            <span class="icofont-close js-menu-toggle"></span>
+        </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+</div>
+<nav class="site-nav">
+    <div class="container">
+        <div class="site-navigation">
+            <div class="row">
+                <div class="col-md-6 text-center order-1 order-md-2 mb-3 mb-md-0">
+                    <a href="" class="logo m-0 text-uppercase">MagDesign</a>
+                </div>
+                <div class="col-md-3 order-3 order-md-1">
+                    <form action="#" class="search-form">
+                        <span class="icon-search2"></span>
+                        <input type="search" class="form-control" placeholder="Search..." />
+                    </form>
+                </div>
+                <div class="col-md-3 text-end order-2 order-md-3 mb-3 mb-md-0">
+                    <div class="d-flex">
+                        <ul class="list-unstyled social me-auto">
+                            <li><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li><a href="#"><span class="icon-instagram"></span></a></li>
+                        </ul>
+                        <a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block"
+                           data-toggle="collapse" data-target="#main-navbar">
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{ include('partials/_menu.html.twig')}}
+        </div>
+    </div>
+</nav>
+{% block body %}{% endblock %}
+<div class="site-footer">
+    <div class="container">
+        <div class="row justify-content-center copyright">
+            <div class="col-lg-7 text-center">
+                <div class="widget">
+                    <ul class="social list-unstyled">
+                        <li><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li><a href="#"><span class="icon-linkedin"></span></a></li>
+                        <li><a href="#"><span class="icon-youtube-play"></span></a></li>
+                    </ul>
+                </div>
+                <div class="widget">
+                    <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                        All rights reserved
+                    </p>
+                    <div class="d-block">
+                        <a href="#" class="m-2">Terms &amp; Conditions</a>/
+                        <a href="#" class="m-2">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <div id="overlayer"></div>
+    <div class="loader">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/tiny-slider.js') }}"></script>
+    <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/js/aos.js') }}"></script>
+    <script src="{{ asset('assets/js/navbar.js') }}"></script>
+    <script src="{{ asset('assets/js/counter.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
+</body>
 </html>
