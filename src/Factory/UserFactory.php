@@ -35,8 +35,8 @@ final class UserFactory extends ModelFactory
     {
         return [
             'disabled' => self::faker()->boolean(),
-            'fullName' => self::faker()->text(255),
-            'username' => self::faker()->text(180),
+            'fullName' => \sprintf('%s %s', self::faker()->firstName(), self::faker()->lastName()),
+            'username' => self::faker()->userName(),
             'verified' => self::faker()->boolean(),
             'password' => '123456'
         ];

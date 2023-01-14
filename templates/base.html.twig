@@ -7,13 +7,13 @@
     <meta name="author" content=""/>
     <title>Blog Home - Start Bootstrap Template</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('site/assets/favicon.ico') }}"/>
-    <link href="{{ asset('site/css/styles.css')}}" rel="stylesheet"/>
-    {% block styles %}{% endblock%}
+    <link href="{{ asset('site/css/styles.css') }}" rel="stylesheet"/>
+    {% block styles %}{% endblock %}
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="{{ path('app_index')}}">Start Bootstrap</a>
+        <a class="navbar-brand" href="{{ path('app_index') }}">Start Bootstrap</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                     class="navbar-toggler-icon"></span></button>
@@ -22,7 +22,14 @@
                 <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
+                <li class="nav-item">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <span class="text-white">Welcome {{ app.user.fullName }}</span>
+                        <a class="nav-link active" aria-current="page" href="{{ path('my_security_logout', {'_csrf_token': csrf_token('logout')}) }}">Logout</a>
+                    {% else %}
+                        <a class="nav-link active" aria-current="page" href="{{ path('my_security_login') }}">Login</a>
+                    {% endif %}
+                </li>
             </ul>
         </div>
     </div>

@@ -16,6 +16,17 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            form_login:
+                login_path: my_security_login
+                check_path: my_security_login
+                enable_csrf: true
+            logout:
+                path: my_security_logout
+                enable_csrf: true
+            # the following lines require the RateLimiter Component
+#            login_throttling:
+#                max_attempts: 3
+#                interval: '10 minutes'
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
