@@ -1,0 +1,53 @@
+{% block _blog_title_row %}
+    <div class="row mb-3">
+        {{ form_label(form, null, {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+        <div class="col-sm-10">
+            {{ form_widget(form, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form) }}
+            {{ form_help(form) }}
+        </div>
+    </div>
+{% endblock %}
+{% block  _blog_content_row %}
+    <div class="row mb-3">
+        {{ form_label(form, 'Content', {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+        <div class="col-sm-10">
+            {{ form_widget(form, {'attr': {'class': 'form-control', 'rows': 9}}) }}
+            {{ form_errors(form) }}
+        </div>
+    </div>
+{% endblock %}
+{% block _blog_draft_row %}
+    <div class="form-check">
+        {{ form_widget(form, {'attr': {'class': "form-check-input"}}) }}
+        {{ form_label(form, 'This blog is still in draf ?', {'label_attr': {'class': "form-check-label"}}) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+{% block _blog_terms_row %}
+    <div class="form-check">
+        {{ form_widget(form, {'attr': {'class': "form-check-input"}}) }}
+        {{ form_label(form,'I have and accepted the <a href="">terms</a>',{'attr': {'class': "form-check-label"}}) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+{# customize the specific label #}
+{% block  _blog_content_label %}
+    <label class="col-sm-2 col-form-label"> {{ label }}
+        <small>{{ form_help(form) }}</small>
+    </label>
+{% endblock %}
+
+{% block _blog_categories_entry_row %}
+<div class="row">
+    <div class="col-10 mt-2 mb-2 ">
+        {{ form_row(form, {'attr': {'class': 'form-control'}})}}
+    </div>
+    <div class="col-2 mt-2 mb-2">
+        <button type="button"
+                class="btn btn-danger delete_category_item">
+            Delete
+        </button>
+    </div>
+</div>
+{% endblock %}

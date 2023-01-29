@@ -33,6 +33,7 @@ class IndexController
     #[Route('/', name: 'app_index')]
     public function index(): Response
     {
+        $this->blogManager->someMethod();die;
         $content =  $this->twig->render('index/index.html.twig', [
             'blogs' => $this->blogManager->splitToNewlyAndExtraBlogs(5),
         ]);
