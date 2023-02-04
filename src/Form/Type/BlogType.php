@@ -38,7 +38,6 @@ class BlogType extends AbstractType
                 'label' => false,
                 'entry_options' => [
                     'label' => false,
-                    'placeholder' => 'Choose a category',
                 ],
             ])
 
