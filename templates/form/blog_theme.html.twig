@@ -51,3 +51,9 @@
     </div>
 </div>
 {% endblock %}
+
+{% block form_errors %}
+    {% for error in errors %}
+        <p class="danger small">{{ error.message }}</p>
+    {% endfor %}
+{% endblock %}

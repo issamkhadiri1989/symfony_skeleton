@@ -11,9 +11,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Slug;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BlogRepository::class)]
+#[UniqueEntity(
+    fields: ["title", "slug"],
+    message: "A blog with this title already exists",
+    repositoryMethod: "checkUniquenessMethod"
+)]
 class Blog
 {
     #[ORM\Id]
@@ -44,6 +50,7 @@ class Blog
     private ?string $slug = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'blogs')]
+    #[Assert\Unique(message: "One or many categories are duplicated")]
     private Collection $categories;
 
     #[ORM\OneToMany(mappedBy: 'blog', targetEntity: Comment::class, orphanRemoval: true)]
@@ -187,5 +194,10 @@ class Blog
         }
 
         return $this;
+    }
+
+    public function categoryNormalizer(Category $element)
+    {
+        return $element->getId();
     }
 }

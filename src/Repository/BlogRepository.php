@@ -43,6 +43,19 @@ class BlogRepository extends ServiceEntityRepository
         $manager->flush();
     }
 
+    public function checkUniquenessMethod(array $fields)
+    {
+        $queryBuilder = $this->createQueryBuilder('b');
+
+        return $queryBuilder->select()
+            ->where('b.title', ':title')
+            ->orWhere('b.slug', ':slug')
+            ->setParameter('title', $fields['title'])
+            ->setParameter('slug', $fields['slug'])
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * This function will persist the categories for the given Blog $entity instance.
      *
