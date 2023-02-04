@@ -19,8 +19,7 @@ RUN docker-php-ext-install xsl
 # Cron
 RUN apt-get update && apt-get install -y cron
 
-#  Composer
-COPY composer.json composer.lock ./
-RUN composer self-update
+# Install Xdebug
+RUN pecl install xdebug-3.1.5 && docker-php-ext-enable xdebug
 
 EXPOSE 8585
