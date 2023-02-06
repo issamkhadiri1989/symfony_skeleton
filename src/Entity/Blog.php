@@ -16,9 +16,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BlogRepository::class)]
 #[UniqueEntity(
-    fields: ["title", "slug"],
+    fields: ["title"],
     message: "A blog with this title already exists",
-    repositoryMethod: "checkUniquenessMethod"
+    /*repositoryMethod: "checkUniquenessMethod"*/
 )]
 class Blog
 {
@@ -55,6 +55,10 @@ class Blog
 
     #[ORM\OneToMany(mappedBy: 'blog', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
+
+    #[ORM\ManyToOne(inversedBy: 'blogs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $author = null;
 
     public function __construct()
     {
@@ -199,5 +203,17 @@ class Blog
     public function categoryNormalizer(Category $element)
     {
         return $element->getId();
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
     }
 }

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Blog;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,9 +21,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BlogRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private readonly Security $security;
+
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
         parent::__construct($registry, Blog::class);
+        $this->security = $security;
     }
 
     /**
@@ -37,6 +42,10 @@ class BlogRepository extends ServiceEntityRepository
     {
         $manager = $this->getEntityManager();
         if (true === $isNewEntry) {
+            // because it is a new blog, the connected user must be defined here
+            /** @var User $user */
+            $user = $this->security->getUser();
+            $entity->setAuthor($user);
             $manager->persist($entity);
         }
         $this->doPersistCategories($entity, $manager);

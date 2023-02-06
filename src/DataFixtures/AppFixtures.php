@@ -9,28 +9,19 @@ use App\Factory\BlogFactory;
 use App\Factory\CategoryFactory;
 use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements DependentFixtureInterface
 {
     private const MAX_CATEGORIES = 6;
     private const MAX_BLOGS = 26;
-    private const MAX_USERS = 10;
-
-    public function __construct(private readonly UserPasswordHasherInterface $hasher)
-    {
-    }
 
     public function load(ObjectManager $manager): void
     {
-        UserFactory::createMany(self::MAX_USERS);
-        foreach (UserFactory::all() as $user) {
-            $hashedPassword = $this->hasher->hashPassword($user->object(), $user->getPassword());
-            $user->setPassword($hashedPassword);
-        }
-
-        BlogFactory::createMany(self::MAX_BLOGS);
+        BlogFactory::createMany(self::MAX_BLOGS, [
+            'author' => UserFactory::random(),
+        ]);
         CategoryFactory::createMany(self::MAX_CATEGORIES);
         $occurrences = [];
         $categories = CategoryFactory::all(); // get all persisted blogs
@@ -56,5 +47,12 @@ class AppFixtures extends Fixture
     private function isBlogPersisted(array $categories, int $key, mixed $value): bool
     {
         return isset($categories[$key]) === true && \in_array($value, $categories[$key]) === true;
+    }
+
+    public function getDependencies()
+    {
+        return [
+            UserFixtures::class,
+        ];
     }
 }
