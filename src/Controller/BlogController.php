@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Blog;
+use App\Form\Factory\BlogForm;
+use App\Form\Factory\BlogFormFactory;
 use App\Service\Blog\FormProcessor;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bridge\Twig\Attribute\Template;
@@ -18,8 +20,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BlogController extends  AbstractController
 {
-    public function __construct(private readonly FormProcessor $processor)
+    private BlogFormFactory $formProcessor;
+
+    public function __construct(private readonly FormProcessor $processor, BlogFormFactory $formProcessor)
     {
+        $this->formProcessor = $formProcessor;
     }
 
     /**
@@ -53,13 +58,15 @@ class BlogController extends  AbstractController
     #[Template(template: "blog/new.html.twig")]
     public function edit(Blog $blog): array|RedirectResponse
     {
-        $form = $this->processor->formBuilder($blog);
-        if ($this->processor->processForm($form, $blog) === true) {
-            return $this->redirectToRoute('edit_blog', ['id' => $blog->getId()]);
+        $blogFormFactory = $this->formProcessor->createForm($blog, false, []);
+        $formInstance = $this->formProcessor->getForm();
+
+        if (true === $blogFormFactory->isProcessed()) {
+            return $this->formProcessor->createResponse();
         }
 
         return [
-            'form' => $form->createView(),
+            'form' => $formInstance->createView(),
         ];
     }
 }
