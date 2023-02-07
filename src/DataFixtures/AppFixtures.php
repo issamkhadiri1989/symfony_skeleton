@@ -19,9 +19,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        BlogFactory::createMany(self::MAX_BLOGS, [
-            'author' => UserFactory::random(),
-        ]);
+        BlogFactory::createMany(self::MAX_BLOGS);
         CategoryFactory::createMany(self::MAX_CATEGORIES);
         $occurrences = [];
         $categories = CategoryFactory::all(); // get all persisted blogs

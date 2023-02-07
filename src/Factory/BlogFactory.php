@@ -48,9 +48,9 @@ final class BlogFactory extends ModelFactory
      */
     protected function initialize(): self
     {
-        return $this
-            // ->afterInstantiate(function(Blog $blog): void {})
-        ;
+        return $this->afterInstantiate(function(Blog $blog): void {
+            $blog->setAuthor(UserFactory::random()->object());
+        });
     }
 
     protected static function getClass(): string

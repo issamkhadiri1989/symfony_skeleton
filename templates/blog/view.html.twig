@@ -2,6 +2,9 @@
 {% block content %}
     <article>
         <header class="mb-4">
+            {% if blog.draft is same as (true) %}
+                <label class="badge bg-danger "> DRAFT </label>
+            {% endif %}
             <h1 class="fw-bolder mb-1">
                 {{ blog.title }}
             </h1>

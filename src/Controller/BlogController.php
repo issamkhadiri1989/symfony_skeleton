@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Blog;
+use App\Security\Voter\BlogVoter;
 use App\Service\Blog\FormProcessor;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bridge\Twig\Attribute\Template;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * This controller class manages everything related to blogs.
@@ -31,6 +33,7 @@ class BlogController extends  AbstractController
      */
     #[Route(path: "/blog/{slug}", name: "view_blog", priority: 1)]
     #[Template("blog/view.html.twig")]
+    #[IsGranted(attribute: BlogVoter::READ_BLOG, subject: 'blog')]
     public function singleBlock(#[MapEntity(mapping: ['slug' => 'slug'])] Blog $blog): array
     {
         return ['blog' => $blog];
@@ -51,7 +54,8 @@ class BlogController extends  AbstractController
 
     #[Route(path: "/blog/edit/{id}", name: "edit_blog")]
     #[Template(template: "blog/new.html.twig")]
-    public function edit(Blog $blog): array|RedirectResponse
+    #[IsGranted(attribute: BlogVoter::EDIT_BLOG, subject: 'blog')]
+    public function edit(#[MapEntity] Blog $blog): array|RedirectResponse
     {
         $form = $this->processor->formBuilder($blog);
         if ($this->processor->processForm($form, $blog) === true) {
