@@ -1,0 +1,8 @@
+{% extends 'error.html.twig' %}
+{% block error_content %}
+    <h1 class="display-1 fw-bold">{{ status_code }}</h1>
+    <p class="fs-3"><span class="text-danger">Opps!</span> </p>
+    <p class="lead">
+        {{ status_text  }}
+    </p>
+{% endblock %}

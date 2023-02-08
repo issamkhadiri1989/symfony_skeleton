@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="d-flex align-items-center justify-content-center vh-100 bg-primary">
+        <div class="text-center">
+            {% block error_content %}{% endblock %}
+            <a href="{{ path('app_index') }}" class="btn btn-primary">Go Home</a>
+        </div>
+    </div>
+{% endblock %}
