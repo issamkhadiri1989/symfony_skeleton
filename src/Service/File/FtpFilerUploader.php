@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace App\Service\File;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+
 class FtpFilerUploader implements UploaderInterface
 {
+    public function __construct(private readonly ContainerBagInterface $bag)
+    {
+    }
+
     public function upload(string $sourceFile, string $newFile): void
     {
         $connect = $this->doConnect();
@@ -24,10 +30,11 @@ class FtpFilerUploader implements UploaderInterface
 
     private function doConnect()
     {
-        $connect = \ftp_connect("my-ftp-server") or die ("Connection to server unsuccessful");
-        $user = "user";
-        $password= "123";
-        \ftp_login($connect, $user, $password) or die ("Login was unsuccessful");
+        $hostname = $this->bag->get('ftp.host');
+        $connect = \ftp_connect($hostname);
+        $user = $this->bag->get('ftp.username');
+        $password= $this->bag->get('ftp.password');
+        \ftp_login($connect, $user, $password);
 
         return $connect;
     }

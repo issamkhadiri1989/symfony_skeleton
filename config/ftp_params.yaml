@@ -1,0 +1,4 @@
+parameters:
+    ftp.username: '%env(FTP_USERNAME)%'
+    ftp.password: '%env(FTP_PASSWORD)%'
+    ftp.host: '%env(FTP_HOST)%'

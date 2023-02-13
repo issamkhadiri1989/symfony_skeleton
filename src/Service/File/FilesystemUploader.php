@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Service\File;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 class FilesystemUploader implements UploaderInterface
 {
+    private LoggerInterface $logger;
+
     public function __construct(private readonly Filesystem $filesystem)
     {
     }
@@ -40,5 +43,12 @@ class FilesystemUploader implements UploaderInterface
         });
 
         return \array_values($elements);
+    }
+
+    // uncomment the line bellow to enable autowiring
+    //#[Required]
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
     }
 }

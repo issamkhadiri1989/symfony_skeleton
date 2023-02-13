@@ -1,2 +1,2 @@
 web_profiler:
-    toolbar: false
+    toolbar: true

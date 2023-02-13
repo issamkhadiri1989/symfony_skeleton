@@ -1,5 +1,6 @@
 framework:
     mailer:
-        envelope:
-            sender: '%app.mail.support%'
-#        dsn: '%env(MAILER_DSN)%'
+        # un comment the lines bellow if you want to fix a sender
+        # envelope:
+        #    sender: '%app.mail.support%' # this overrides the `from` in mailer
+        dsn: '%env(MAILER_DSN)%'
