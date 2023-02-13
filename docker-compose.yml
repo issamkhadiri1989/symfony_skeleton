@@ -61,6 +61,19 @@ services:
         ports:
             - 1025:1025
             - 1080:1080
+    ftp-server:
+        networks:
+            - inner_net
+        container_name: my-ftp-server
+        environment:
+            - FTP_PASS=123
+            - FTP_USER=user
+        image: garethflowers/ftp-server
+        ports:
+            - '20-21:20-21/tcp'
+            - '40000-40009:40000-40009/tcp'
+        volumes:
+            - '/data:/home/user'
 volumes:
     db_data:
     db_admin_data:
