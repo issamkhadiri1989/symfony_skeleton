@@ -1,3 +1,4 @@
+{% import "macros/login_controls.html.twig" as login %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,12 +24,8 @@
                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
                 <li class="nav-item">
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <span class="text-white">Welcome {{ app.user.fullName }}</span>
-                        <a class="nav-link active" aria-current="page" href="{{ path('my_security_logout', {'_csrf_token': csrf_token('logout')}) }}">Logout</a>
-                    {% else %}
-                        <a class="nav-link active" aria-current="page" href="{{ path('my_security_login') }}">Login</a>
-                    {% endif %}
+                    {# # to use properly this macro pass the login route as the first argument and the logout route as the 2nd argument #}
+                    {{ login.login('app_login', 'app_logout') }}
                 </li>
             </ul>
         </div>

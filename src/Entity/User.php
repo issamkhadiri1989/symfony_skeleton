@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,6 +41,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Blog::class)]
     private Collection $blogs;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $authenticationToken = null;
 
     public function __construct()
     {
@@ -178,6 +182,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $blog->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuthenticationToken(): ?string
+    {
+        return $this->authenticationToken;
+    }
+
+    public function setAuthenticationToken(?string $authenticationToken): self
+    {
+        $this->authenticationToken = $authenticationToken;
 
         return $this;
     }

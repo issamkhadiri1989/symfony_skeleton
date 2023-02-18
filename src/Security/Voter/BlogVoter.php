@@ -29,6 +29,11 @@ class BlogVoter extends Voter
         /** @var User $user */
         $user = $token->getUser();
 
+        // check first that the use is actually logged in
+        if (null === $user) {
+            return false;
+        }
+
         return match (true) {
             self::READ_BLOG === $attribute => $this->userCanReadBlog($subject, $user),
             self::EDIT_BLOG === $attribute => $this->userCanEditBlog($subject, $user),

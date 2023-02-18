@@ -16,12 +16,18 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            form_login:
-                login_path: my_security_login
-                check_path: my_security_login
-                enable_csrf: true
+            custom_authenticators:
+                - App\Security\Authenticator\LoginAuthenticator
+                - App\Security\Authenticator\TokenAuthenticator
+
+# Enable these lines to use Built in Login Form Authenticator
+#            form_login:
+#                login_path: my_security_login
+#                check_path: my_security_login
+#                enable_csrf: true
             logout:
-                path: my_security_logout
+#                path: my_security_logout
+                path: app_logout
                 enable_csrf: true
             # the following lines require the RateLimiter Component
 #            login_throttling:

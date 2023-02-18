@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Repository\CategoryRepository;
 use App\Service\Category\CategoryManager;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bridge\Twig\Attribute\Template;
@@ -38,7 +37,7 @@ class CategoryController
         return ['category' => $category];
     }
 
-    public function retreiveAllCategories(CategoryManager $manager): Response
+    public function retrieveAllCategories(CategoryManager $manager): Response
     {
         $categories = $manager->splitCategories();
 

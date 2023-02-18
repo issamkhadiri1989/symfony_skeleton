@@ -1,0 +1,9 @@
+{# This is just an example of how to use macrons in Twig #}
+{% macro login(loginPath, logoutPath) %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <span class="text-white">Welcome {{ app.user.fullName }}</span>
+        <a class="nav-link active" aria-current="page" href="{{ path(logoutPath, {'_csrf_token': csrf_token('logout')}) }}">Logout</a>
+    {% else %}
+        <a class="nav-link active" aria-current="page" href="{{ path(loginPath) }}">Login</a>
+    {% endif %}
+{% endmacro %}
