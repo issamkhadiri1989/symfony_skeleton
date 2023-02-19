@@ -1,0 +1,38 @@
+{% form_theme edit_password 'form/edit_password.html.twig' %}
+{% extends 'layout.html.twig' %}
+{% block title %}Edit your profile{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-6">
+            {{ form_start(form) }}
+            <div class="card mb-4">
+                <div class="card-header">Edit your info</div>
+                <div class="card-body">
+                    {{ form_widget(form.fullName, {'attr': {'class': 'form-control', 'placeholder': 'Your full name'}}) }}
+                    {{ form_errors(form.fullName) }}
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Update profile
+                    </button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-lg-6">
+            {{ form_start(edit_password) }}
+            <div class="card mb-4">
+                <div class="card-header">Update your password</div>
+                <div class="card-body">
+                    {{ form_row(edit_password) }}
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Edit password
+                    </button>
+                </div>
+            </div>
+            {{ form_end(edit_password) }}
+        </div>
+    </div>
+{% endblock %}
