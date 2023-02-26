@@ -8,12 +8,15 @@ imports:
 
 parameters:
     app.mail.support: 'ikhadiri@sqli.com'
+    app.mail.notification: 'notification@system.com'
+    app.mail.admin: 'admin@system.com'
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
+            string $adminAddress: '%app.mail.admin%'
             $supportEmail: 'value1@example.com'
             Psr\Log\LoggerInterface $loggerRequest: '@monolog.logger.request'
             Psr\Log\LoggerInterface $loggerPhp: '@monolog.logger.php'
@@ -48,3 +51,16 @@ services:
     App\Service\File\FilesystemUploader:
         calls:
             - setLogger: ['@logger']
+#   Uncomment the following lines to enable configuring using yaml
+
+#    App\Listener\LoginListener:
+#        tags: [kernel.event_listener]
+
+#    App\Listener\LoginListener:
+#        tags:
+#            - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\LoginSuccessEvent }
+
+#    App\Listener\LoginListener:
+#        tags:
+#            - { name: kernel.event_listener, priority: 2, method: 'preListen' }
+#            - { name: kernel.event_listener, priority: 1, method: 'postListen'}

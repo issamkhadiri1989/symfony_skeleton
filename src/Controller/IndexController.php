@@ -38,9 +38,8 @@ class IndexController
      * @throws SyntaxError
      */
     #[Route('/', name: 'app_index')]
-    public function index(Mailer $mailer): Response
+    public function index(): Response
     {
-        $mailer->compose();
         $content =  $this->twig->render('index/index.html.twig', [
             'blogs' => $this->blogManager->splitToNewlyAndExtraBlogs(5),
         ]);

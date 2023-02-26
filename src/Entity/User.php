@@ -45,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $authenticationToken = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $lastConnectionDate = null;
+
     public function __construct()
     {
         $this->blogs = new ArrayCollection();
@@ -194,6 +197,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAuthenticationToken(?string $authenticationToken): self
     {
         $this->authenticationToken = $authenticationToken;
+
+        return $this;
+    }
+
+    public function getLastConnectionDate(): ?\DateTimeInterface
+    {
+        return $this->lastConnectionDate;
+    }
+
+    public function setLastConnectionDate(?\DateTimeInterface $lastConnectionDate): self
+    {
+        $this->lastConnectionDate = $lastConnectionDate;
 
         return $this;
     }

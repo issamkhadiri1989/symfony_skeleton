@@ -1,6 +1,8 @@
 framework:
     mailer:
         # un comment the lines bellow if you want to fix a sender
-        # envelope:
-        #    sender: '%app.mail.support%' # this overrides the `from` in mailer
+        envelope:
+            # this overrides the `from` in mailer
+            # internal default sender
+            sender: '%env(MAILER_DEFAULT_SENDER)%'
         dsn: '%env(MAILER_DSN)%'

@@ -36,4 +36,17 @@ class User
         }
         $this->manager->flush();
     }
+
+    /**
+     * Performs the updating of the connection date and time.
+     *
+     * @param UserEntity $user
+     *
+     * \@return void
+     */
+    public function updateLoginDate(UserEntity $user): void
+    {
+        $user->setLastConnectionDate(new \DateTimeImmutable());
+        $this->manager->flush();
+    }
 }
