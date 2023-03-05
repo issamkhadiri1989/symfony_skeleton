@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Blog;
 
 use App\Entity\Blog;
+use App\Entity\User;
 use App\Repository\BlogRepository;
 use App\Service\AbstractSplitter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -62,5 +63,18 @@ class BlogManager
                 return \array_slice($this->blogs, 1);
             }
         };
+    }
+
+    /**
+     * Removes all blogs associated to the given author.
+     *
+     * @param User $author
+     * @param bool $doFlush
+     *
+     * @return void
+     */
+    public function removeRelatedBlogs(User $author, bool $doFlush = false): void
+    {
+        $this->repository->removeEntries($author->getBlogs(), $doFlush);
     }
 }

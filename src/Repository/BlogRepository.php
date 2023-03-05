@@ -19,7 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Blog[]    findAll()
  * @method Blog[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BlogRepository extends ServiceEntityRepository
+class BlogRepository extends AbstractRepository
 {
     private readonly Security $security;
 

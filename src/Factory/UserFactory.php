@@ -46,7 +46,8 @@ final class UserFactory extends ModelFactory
             'fullName' => \sprintf('%s %s', self::faker()->firstName(), self::faker()->lastName()),
             'username' => self::faker()->userName(),
             'verified' => self::faker()->boolean(),
-            'password' => '123456'
+            'password' => '123456',
+            'lastConnectionDate' => self::faker()->dateTimeBetween('-80 days')
         ];
     }
 

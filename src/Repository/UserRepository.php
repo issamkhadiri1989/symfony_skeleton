@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class UserRepository extends AbstractRepository implements PasswordUpgraderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -27,15 +27,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function save(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(User $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
@@ -54,5 +45,30 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+
+    /**
+     * Gets the list of verified accounts that their last login date is before the given amount of days.
+     *
+     * @param int $amountOfDays
+     *
+     * @return User[]
+     */
+    public function findOldVerifiedAccounts(int $amountOfDays): array
+    {
+        $queryBuilder = $this->createQueryBuilder('a');
+        $expression = $queryBuilder->expr();
+        $limitDate = (new \DateTime())->sub(new \DateInterval("P{$amountOfDays}D"));
+        $condition = $expression->andX(
+            $expression->lt('a.lastConnectionDate', '?1'),
+            $expression->eq('a.verified', '?2')
+        );
+
+        return $queryBuilder
+            ->where($condition)
+            ->setParameter(1, $limitDate)
+            ->setParameter(2, true)
+            ->getQuery()
+            ->getResult();
     }
 }
