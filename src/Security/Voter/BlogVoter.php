@@ -29,11 +29,6 @@ class BlogVoter extends Voter
         /** @var User $user */
         $user = $token->getUser();
 
-        // check first that the use is actually logged in
-        if (null === $user) {
-            return false;
-        }
-
         return match (true) {
             self::READ_BLOG === $attribute => $this->userCanReadBlog($subject, $user),
             self::EDIT_BLOG === $attribute => $this->userCanEditBlog($subject, $user),
@@ -42,13 +37,18 @@ class BlogVoter extends Voter
         };
     }
 
-    private function userCanEditBlog(Blog $blog, User $author): bool
+    private function userCanEditBlog(Blog $blog, ?User $author): bool
     {
+        // the edition is not possible if the user is not logged in
+        if (null === $author) {
+            return false;
+        }
+
         //only the current user is capable to edit.
         return $blog->getAuthor() === $author;
     }
 
-    private function userCanReadBlog(Blog $blog, User $author): bool
+    private function userCanReadBlog(Blog $blog, ?User $author): bool
     {
         if ($this->userCanEditBlog($blog, $author) === true) { // The current user is the author
             return true;
