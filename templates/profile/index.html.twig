@@ -8,8 +8,24 @@
             <div class="card mb-4">
                 <div class="card-header">Edit your info</div>
                 <div class="card-body">
-                    {{ form_widget(form.fullName, {'attr': {'class': 'form-control', 'placeholder': 'Your full name'}}) }}
-                    {{ form_errors(form.fullName) }}
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_widget(form.fullName, {'attr': {'class': 'form-control', 'placeholder': 'Your full name'}}) }}
+                            {{ form_errors(form.fullName) }}
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-12">
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Your full name'}}) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-12">
+                            {{ form_widget(form.shippingAddress, {'attr': {'class': 'form-control', 'placeholder': 'Your full name'}}) }}
+                            {{ form_errors(form.shippingAddress) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">

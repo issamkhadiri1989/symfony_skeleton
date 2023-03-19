@@ -1,9 +1,23 @@
 {# This is just an example of how to use macrons in Twig #}
 {% macro login(loginPath, logoutPath) %}
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <span class="text-white">Welcome {{ app.user.fullName }}</span>
-        <a class="nav-link active" aria-current="page" href="{{ path(logoutPath, {'_csrf_token': csrf_token('logout')}) }}">Logout</a>
-    {% else %}
-        <a class="nav-link active" aria-current="page" href="{{ path(loginPath) }}">Login</a>
-    {% endif %}
+    <div class="dropdown show">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                Welcome {{ app.user.fullName }}
+            {% else %}
+                Menu
+            {% endif %}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="dropdown-item" href="{{ url('app_profile') }}">Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ path(logoutPath, {'_csrf_token': csrf_token('logout')}) }}">Logout</a>
+            {% else %}
+                <a class="dropdown-item" href="{{ path('app_register') }}">Sign up</a>
+                <a class="dropdown-item" href="{{ path(loginPath) }}">Sign in</a>
+            {% endif %}
+        </div>
+    </div>
 {% endmacro %}

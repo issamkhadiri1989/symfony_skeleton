@@ -1,0 +1,9 @@
+{% form_theme registerForm 'bootstrap_5_layout.html.twig' %}
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <h1>Be a part of our community !</h1>
+    {{ form_start(registerForm, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(registerForm) }}
+    <button type="submit" class="btn btn-primary">Register</button>
+    {{ form_end(registerForm) }}
+{% endblock %}
